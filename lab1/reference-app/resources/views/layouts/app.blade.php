@@ -10,7 +10,7 @@
         nav a { color: #db5f06; text-decoration: none; margin-right: 20px; }
         nav a:hover { color: #ff7a1a; }
         main { padding: 20px; min-height: 300px; }
-        footer { background: #222; color: #db5f06; padding: 15px 20px; text-align: center; }
+        footer { background: #222; color: #db5f06; padding: 20px 20px; text-align: center; }
     </style>
 </head>
 <body>
