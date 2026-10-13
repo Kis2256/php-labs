@@ -74,6 +74,38 @@
 
         .lab-info { margin-top: 40px; padding: 18px 24px; background: #fff; border-left: 5px solid var(--orange); border-radius: 8px; color: var(--gray); font-size: 14px; line-height: 1.6; }
 
+        .page-title { font-size: 34px; margin-bottom: 10px; }
+        .page-title span { color: var(--orange); }
+        .page-lead { color: var(--gray); font-size: 17px; line-height: 1.6; max-width: 760px; margin-bottom: 30px; }
+        .white-box { background: #fff; border-radius: 14px; padding: 30px; box-shadow: 0 4px 14px rgba(0, 0, 0, .05); }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+        .chip { background: #fff1e6; color: var(--orange-dark); font-weight: 600; padding: 8px 16px; border-radius: 30px; }
+
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .step { background: #fff; border-radius: 14px; padding: 24px; }
+        .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--orange); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+        .step p { color: var(--gray); font-size: 14px; line-height: 1.5; }
+
+        .form-wrap { display: grid; grid-template-columns: 1fr 1.4fr; gap: 30px; align-items: start; }
+        .form-info { background: var(--dark); color: #c9ced6; border-radius: 14px; padding: 30px; line-height: 1.7; }
+        .form-info h3 { color: #fff; margin-bottom: 12px; }
+        .form-info b { color: var(--orange); }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; border: 2px solid #e5e7eb; border-radius: 8px; font: inherit; outline: none; background: #fff; }
+        .form-group textarea { min-height: 130px; resize: vertical; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--orange); }
+        .form-group .is-invalid { border-color: #dc2626; }
+        .error { color: #dc2626; font-size: 13px; margin-top: 6px; }
+        button.btn { border: none; font: inherit; font-weight: 700; cursor: pointer; }
+
+        .confirm { max-width: 700px; margin: 0 auto; text-align: center; }
+        .confirm-icon { width: 80px; height: 80px; border-radius: 50%; background: #e8f8ee; color: #16a34a; font-size: 40px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .confirm table { width: 100%; border-collapse: collapse; margin: 24px 0; text-align: left; }
+        .confirm td { padding: 12px 14px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .confirm td:first-child { font-weight: 600; width: 35%; color: var(--gray); }
+
         .footer { background: var(--dark); color: #aab1bc; padding-top: 50px; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.3fr; gap: 40px; padding-bottom: 40px; }
         .footer .logo { color: #fff; margin-bottom: 16px; }
@@ -92,6 +124,7 @@
             .hero { flex-direction: column; padding: 36px; text-align: center; }
             .hero h1 { font-size: 30px; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
+            .form-wrap { grid-template-columns: 1fr; }
         }
         @@media (max-width: 560px) {
             .footer-grid { grid-template-columns: 1fr; }
@@ -109,7 +142,7 @@
 
     <header class="header">
         <div class="container">
-            <a href="{{ url('/') }}" class="logo">
+            <a href="{{ route('home') }}" class="logo">
                 <div class="logo-icon">P</div>
                 <div>potuzhno<span>print</span>.ua</div>
             </a>
@@ -123,13 +156,14 @@
 
     <nav class="menu">
         <div class="container">
-            <a href="{{ url('/') }}" class="catalog">☰ Головна</a>
-            <a href="{{ url('/printers') }}">3D-принтери</a>
-            <a href="{{ url('/filament') }}">Філамент</a>
-            <a href="{{ url('/resin') }}">Смоли</a>
-            <a href="{{ url('/parts') }}">Запчастини</a>
-            <a href="{{ url('/about') }}">Про магазин</a>
-            <a href="{{ url('/contact') }}">Контакти</a>
+            <a href="{{ route('home') }}" class="catalog">☰ Головна</a>
+            <a href="{{ route('catalog', 'printers') }}">3D-принтери</a>
+            <a href="{{ route('catalog', 'filament') }}">Філамент</a>
+            <a href="{{ route('catalog', 'resin') }}">Смоли</a>
+            <a href="{{ route('catalog', 'parts') }}">Запчастини</a>
+            <a href="{{ route('print.form') }}">Друк на замовлення</a>
+            <a href="{{ route('site.about') }}">Про магазин</a>
+            <a href="{{ route('site.contact') }}">Контакти</a>
         </div>
     </nav>
 
@@ -140,7 +174,7 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div>
-                <a href="{{ url('/') }}" class="logo">
+                <a href="{{ route('home') }}" class="logo">
                     <div class="logo-icon">P</div>
                     <div>potuzhno<span>print</span>.ua</div>
                 </a>
@@ -149,19 +183,20 @@
             <div>
                 <h4>Каталог</h4>
                 <ul>
-                    <li><a href="{{ url('/printers') }}">3D-принтери</a></li>
-                    <li><a href="{{ url('/filament') }}">Філамент</a></li>
-                    <li><a href="{{ url('/resin') }}">Смоли</a></li>
-                    <li><a href="{{ url('/parts') }}">Запчастини</a></li>
+                    <li><a href="{{ route('catalog', 'printers') }}">3D-принтери</a></li>
+                    <li><a href="{{ route('catalog', 'filament') }}">Філамент</a></li>
+                    <li><a href="{{ route('catalog', 'resin') }}">Смоли</a></li>
+                    <li><a href="{{ route('catalog', 'parts') }}">Запчастини</a></li>
+                    <li><a href="{{ route('print.form') }}">Друк на замовлення</a></li>
                 </ul>
             </div>
             <div>
                 <h4>Покупцям</h4>
                 <ul>
-                    <li><a href="{{ url('/about') }}">Про магазин</a></li>
+                    <li><a href="{{ route('site.about') }}">Про магазин</a></li>
                     <li><a href="#">Оплата і доставка</a></li>
                     <li><a href="#">Обмін та повернення</a></li>
-                    <li><a href="{{ url('/contact') }}">Контакти</a></li>
+                    <li><a href="{{ route('site.contact') }}">Контакти</a></li>
                 </ul>
             </div>
             <div>
