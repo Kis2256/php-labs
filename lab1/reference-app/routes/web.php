@@ -15,8 +15,7 @@ Route::post('/entry', [SiteController::class, 'entryStore'])->name('entry.store'
 Route::view('/about', 'site.about')->name('site.about');
 Route::view('/contact', 'site.contact')->name('site.contact');
 
-Route::get('/catalog/{category}', [SiteController::class, 'catalog'])
-    ->whereIn('category', ['printers', 'filament', 'resin', 'parts'])
-    ->name('catalog');
-Route::get('/3d-print', [SiteController::class, 'printService'])->name('print.form');
-Route::post('/3d-print', [SiteController::class, 'printServiceStore'])->name('print.store');
+Route::get('/catalog/{category}', [SiteController::class, 'catalog'])->name('catalog');
+
+Route::get('/3d-print', [SiteController::class, 'printOrder'])->name('print.form');
+Route::post('/3d-print', [SiteController::class, 'printOrderStore'])->name('print.store');

@@ -157,10 +157,9 @@
     <nav class="menu">
         <div class="container">
             <a href="{{ route('home') }}" class="catalog">☰ Головна</a>
-            <a href="{{ route('catalog', 'printers') }}">3D-принтери</a>
-            <a href="{{ route('catalog', 'filament') }}">Філамент</a>
-            <a href="{{ route('catalog', 'resin') }}">Смоли</a>
-            <a href="{{ route('catalog', 'parts') }}">Запчастини</a>
+             @foreach (\App\Enums\CategoryEnum::cases() as $item)
+            <a href="{{ route('catalog', $item->value) }}">{{ $item->title() }}</a>
+            @endforeach
             <a href="{{ route('print.form') }}">Друк на замовлення</a>
             <a href="{{ route('site.about') }}">Про магазин</a>
             <a href="{{ route('site.contact') }}">Контакти</a>
@@ -183,10 +182,9 @@
             <div>
                 <h4>Каталог</h4>
                 <ul>
-                    <li><a href="{{ route('catalog', 'printers') }}">3D-принтери</a></li>
-                    <li><a href="{{ route('catalog', 'filament') }}">Філамент</a></li>
-                    <li><a href="{{ route('catalog', 'resin') }}">Смоли</a></li>
-                    <li><a href="{{ route('catalog', 'parts') }}">Запчастини</a></li>
+                    @foreach (\App\Enums\CategoryEnum::cases() as $item)
+                    <li><a href="{{ route('catalog', $item->value) }}">{{ $item->title() }}</a></li>
+                    @endforeach
                     <li><a href="{{ route('print.form') }}">Друк на замовлення</a></li>
                 </ul>
             </div>

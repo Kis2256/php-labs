@@ -73,7 +73,7 @@
                         <select id="topic" name="topic" class="@error('topic') is-invalid @enderror">
                             <option value="">— оберіть тему —</option>
                             @foreach ($topics as $topic)
-                                <option value="{{ $topic }}" @selected(old('topic') === $topic)>{{ $topic }}</option>
+                         <option value="{{ $topic->value }}" @selected(old('topic') === $topic->value)>{{ $topic->label() }}</option>
                             @endforeach
                         </select>
                         @error('topic')

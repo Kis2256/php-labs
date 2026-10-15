@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryEnum;
+use App\Enums\TopicEnum;
 use App\Http\Requests\EntryRequest;
 use App\Http\Requests\PrintOrderRequest;
 use App\Mail\PrintOrderMail;
@@ -24,19 +26,12 @@ class SiteController extends Controller
         return view('site.entry-confirm', $request->validated());
     }
 
-    public function catalog(string $category)
+    public function catalog(CategoryEnum $category)
     {
-        $categories = [
-            'printers' => ['icon' => '🖨️', 'title' => '3D-принтери', 'text' => 'FDM та SLA-принтери для дому, навчання й виробництва.'],
-            'filament' => ['icon' => '🧵', 'title' => 'Філамент', 'text' => 'PLA, PETG, ABS, TPU та інженерні пластики різних кольорів.'],
-            'resin' => ['icon' => '🧪', 'title' => 'Смоли', 'text' => 'Фотополімерні смоли для деталізованого друку.'],
-            'parts' => ['icon' => '⚙️', 'title' => 'Запчастини', 'text' => 'Сопла, столи, хотенди, ремені та інші комплектуючі.'],
-        ];
-
-        return view('site.catalog', $categories[$category]);
+        return view('site.catalog', ['category' => $category]);
     }
 
-    public function printService()
+    public function printOrder()
     {
         $title = 'Друк на замовлення';
 
@@ -49,14 +44,15 @@ class SiteController extends Controller
 
         $materials = ['PLA', 'PETG', 'ABS', 'TPU', 'Nylon', 'Фотополімерна смола'];
 
-        $topics = PrintOrderRequest::TOPICS;
+        $topics = TopicEnum::cases();
 
         return view('site.print', compact('title', 'services', 'materials', 'topics'));
     }
 
-        public function printServiceStore(PrintOrderRequest $request)
+    public function printOrderStore(PrintOrderRequest $request)
     {
         $data = $request->validated();
+        $data['topic'] = TopicEnum::from($data['topic'])->label();
 
         Mail::to(config('mail.from.address'))->send(new PrintOrderMail($data));
 

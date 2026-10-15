@@ -2,18 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\TopicEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class PrintOrderRequest extends FormRequest
 {
-    public const TOPICS = [
-        'Друк деталі за моделлю',
-        'Підбір 3D-принтера',
-        'Консультація щодо матеріалів',
-        'Інше питання',
-    ];
-
     public function authorize(): bool
     {
         return true;
@@ -24,7 +18,7 @@ class PrintOrderRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'topic' => ['required', Rule::in(self::TOPICS)],
+            'topic' => ['required', Rule::enum(TopicEnum::class)],
             'message' => ['required', 'string', 'min:10', 'max:2000'],
         ];
     }
@@ -39,7 +33,7 @@ class PrintOrderRequest extends FormRequest
             'email.email' => 'Email введено некоректно.',
             'email.max' => 'Email не може перевищувати 255 символів.',
             'topic.required' => 'Оберіть тему звернення.',
-            'topic.in' => 'Оберіть тему зі списку.',
+            'topic.enum' => 'Оберіть тему зі списку.',
             'message.required' => 'Опишіть ваше замовлення або питання.',
             'message.min' => 'Повідомлення має містити щонайменше 10 символів.',
             'message.max' => 'Повідомлення не може перевищувати 2000 символів.',
