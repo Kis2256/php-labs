@@ -105,7 +105,27 @@
         .confirm table { width: 100%; border-collapse: collapse; margin: 24px 0; text-align: left; }
         .confirm td { padding: 12px 14px; border-bottom: 1px solid #eee; vertical-align: top; }
         .confirm td:first-child { font-weight: 600; width: 35%; color: var(--gray); }
-
+        .toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+        .toolbar .page-title { margin-bottom: 0; }
+        .data-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0, 0, 0, .05); }
+        .data-table th { background: var(--dark); color: #fff; text-align: left; padding: 12px 14px; font-size: 14px; }
+        .data-table td { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: middle; }
+        .data-table tr:hover td { background: #fff7f0; }
+        .data-table td a:not(.btn) { color: var(--orange-dark); font-weight: 600; }
+        .btn-sm { padding: 8px 14px; font-size: 13px; }
+        .btn-light { background: #fff; color: var(--orange-dark); border: 2px solid var(--orange); }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .btn-danger:hover { background: #b91c1c; }
+        .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+        .data-table .actions { margin-top: 0; }
+        .filter { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .filter select { padding: 9px 12px; border: 2px solid #e5e7eb; border-radius: 8px; font: inherit; background: #fff; }
+        .alert-success { background: #e8f8ee; color: #166534; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
+        .details p { margin-bottom: 10px; line-height: 1.6; }
+        .pagination { display: flex; gap: 6px; list-style: none; margin-top: 20px; flex-wrap: wrap; }
+        .pagination a, .pagination span { display: block; padding: 8px 14px; border-radius: 8px; background: #fff; border: 1px solid #e5e7eb; }
+        .pagination .active span { background: var(--orange); color: #fff; border-color: var(--orange); }
+        .pagination .disabled span { color: #aaa; }
         .footer { background: var(--dark); color: #aab1bc; padding-top: 50px; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.3fr; gap: 40px; padding-bottom: 40px; }
         .footer .logo { color: #fff; margin-bottom: 16px; }
@@ -161,6 +181,8 @@
             <a href="{{ route('catalog', $item->value) }}">{{ $item->title() }}</a>
             @endforeach
             <a href="{{ route('print.form') }}">Друк на замовлення</a>
+            <a href="{{ route('printers.index') }}">Склад</a>
+            <a href="{{ route('country.index') }}">Країни</a>
             <a href="{{ route('site.about') }}">Про магазин</a>
             <a href="{{ route('site.contact') }}">Контакти</a>
         </div>

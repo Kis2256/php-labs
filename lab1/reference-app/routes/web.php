@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\PrinterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,3 +21,5 @@ Route::get('/catalog/{category}', [SiteController::class, 'catalog'])->name('cat
 
 Route::get('/3d-print', [SiteController::class, 'printOrder'])->name('print.form');
 Route::post('/3d-print', [SiteController::class, 'printOrderStore'])->name('print.store');
+Route::resource('country', CountryController::class);
+Route::resource('printers', PrinterController::class);
