@@ -183,6 +183,7 @@
             <a href="{{ route('print.form') }}">Друк на замовлення</a>
             <a href="{{ route('printers.index') }}">Склад</a>
             <a href="{{ route('country.index') }}">Країни</a>
+            <a href="{{ route('stats.pages') }}">Статистика</a>
             <a href="{{ route('site.about') }}">Про магазин</a>
             <a href="{{ route('site.contact') }}">Контакти</a>
         </div>

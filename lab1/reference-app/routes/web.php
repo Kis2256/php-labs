@@ -4,6 +4,7 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\PrinterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StatsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +24,7 @@ Route::get('/3d-print', [SiteController::class, 'printOrder'])->name('print.form
 Route::post('/3d-print', [SiteController::class, 'printOrderStore'])->name('print.store');
 Route::resource('country', CountryController::class);
 Route::resource('printers', PrinterController::class);
+
+Route::get('/stats', [StatsController::class, 'pages'])->name('stats.pages');
+Route::get('/stats/detail', [StatsController::class, 'detail'])->name('stats.detail');
+Route::get('/stats/printers', [StatsController::class, 'printers'])->name('stats.printers');
