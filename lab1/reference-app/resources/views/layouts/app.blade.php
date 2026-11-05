@@ -137,6 +137,8 @@
         .footer-bottom { border-top: 1px solid #2f343d; padding: 18px 0; font-size: 13px; }
         .footer-bottom .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 
+
+
         @@media (max-width: 900px) {
             .topbar .container { flex-direction: column; gap: 4px; text-align: center; }
             .header .container { flex-wrap: wrap; }
@@ -150,6 +152,21 @@
             .footer-grid { grid-template-columns: 1fr; }
             .btn-outline { margin: 12px 0 0; }
         }
+
+                /* ===== Блог (ЛР5) ===== */
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 24px 0; }
+        .blog-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+        .blog-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0, 0, 0, .12); }
+        .blog-card-image { width: 100%; height: 180px; object-fit: cover; display: block; }
+        .blog-card-body { padding: 16px; }
+        .blog-card-body h2 { font-size: 20px; margin: 6px 0; }
+        .blog-card-body p { color: var(--gray); line-height: 1.5; margin-bottom: 8px; }
+        .blog-category { font-size: 13px; font-weight: 700; color: var(--orange); }
+        .blog-meta { font-size: 13px; color: #666; }
+        .blog-more { color: var(--orange); font-weight: 700; }
+            /* ===== Перемикач мови (ЛР5) ===== */
+        .lang-switch { margin-left: auto; display: flex; }
+        .menu .lang-switch a.active { background: var(--dark); }
     </style>
 </head>
 <body>
@@ -183,9 +200,15 @@
             <a href="{{ route('print.form') }}">Друк на замовлення</a>
             <a href="{{ route('printers.index') }}">Склад</a>
             <a href="{{ route('country.index') }}">Країни</a>
+            <a href="{{ route('blog.index') }}">Блог</a>
             <a href="{{ route('stats.pages') }}">Статистика</a>
             <a href="{{ route('site.about') }}">Про магазин</a>
             <a href="{{ route('site.contact') }}">Контакти</a>
+            <span class="lang-switch">
+    @foreach (config('locales.supported') as $code => $name)
+        <a href="{{ request()->fullUrlWithQuery(['lang' => $code]) }}" class="{{ app()->getLocale() === $code ? 'active' : '' }}">{{ strtoupper($code) }}</a>
+    @endforeach
+</span>
         </div>
     </nav>
 

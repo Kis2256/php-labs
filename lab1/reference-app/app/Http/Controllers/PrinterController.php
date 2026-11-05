@@ -14,6 +14,7 @@ class PrinterController extends Controller
         $brand = $request->query('brand');
 
         $printers = Printer::query()
+            ->with('translations')
             ->when($brand, fn ($query) => $query->where('brand', $brand))
             ->orderBy('name')
             ->paginate(5)
@@ -40,11 +41,13 @@ class PrinterController extends Controller
 
         return redirect()
             ->route('printers.show', $printer)
-            ->with('success', 'Принтер додано.');
+            ->with('success', 'Принтер додано. Тепер можна додати переклади.');
     }
 
     public function show(Printer $printer)
     {
+        $printer->load('translations');
+
         return view('printers.show', compact('printer'));
     }
 

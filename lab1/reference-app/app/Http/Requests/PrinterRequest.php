@@ -21,7 +21,6 @@ class PrinterRequest extends FormRequest
             'technology' => ['required', Rule::enum(TechnologyEnum::class)],
             'price' => ['required', 'numeric', 'min:0', 'max:1000000'],
             'quantity' => ['required', 'integer', 'min:0', 'max:10000'],
-            'description' => ['nullable', 'string', 'max:2000'],
         ];
     }
 
@@ -42,7 +41,7 @@ class PrinterRequest extends FormRequest
             'quantity.integer' => 'Кількість має бути цілим числом.',
             'quantity.min' => 'Кількість не може бути від\'ємною.',
             'quantity.max' => 'Кількість не може перевищувати 10 000.',
-            'description.max' => 'Опис не може перевищувати 2000 символів.',
+    
         ];
     }
 }
