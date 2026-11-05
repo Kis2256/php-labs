@@ -1,0 +1,23 @@
+<div class="form-group">
+    <label for="code">Код</label>
+    <input id="code" name="code" type="text" maxlength="2" value="{{ old('code', $country->code ?? '') }}" class="@error('code') is-invalid @enderror">
+    @error('code')
+        <p class="error">{{ $message }}</p>
+    @enderror
+</div>
+
+<div class="form-group">
+    <label for="name">Назва</label>
+    <input id="name" name="name" type="text" value="{{ old('name', $country->name ?? '') }}" class="@error('name') is-invalid @enderror">
+    @error('name')
+        <p class="error">{{ $message }}</p>
+    @enderror
+</div>
+
+<div class="form-group">
+    <label for="population">Населення</label>
+    <input id="population" name="population" type="number" min="0" value="{{ old('population', $country->population ?? 0) }}" class="@error('population') is-invalid @enderror">
+    @error('population')
+        <p class="error">{{ $message }}</p>
+    @enderror
+</div>
