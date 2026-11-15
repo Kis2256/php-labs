@@ -15,6 +15,14 @@
             <p><strong>Технологія:</strong> {{ $printer->technology->label() }}</p>
             <p><strong>Ціна:</strong> {{ number_format($printer->price, 2, ',', ' ') }} грн</p>
             <p><strong>На складі:</strong> {{ $printer->quantity }} шт.</p>
+            <p><strong>Сумісні матеріали:</strong></p>
+            <div class="tags">
+                @forelse ($printer->materials as $material)
+                    <span class="tag">{{ $material->name }}</span>
+                @empty
+                    <span>Матеріали не вказано.</span>
+                @endforelse
+            </div>
             <p><strong>Опис:</strong> {{ $printer->description ?: '—' }}</p>
             <p><strong>Додано:</strong> {{ $printer->created_at->format('d.m.Y H:i') }}</p>
 

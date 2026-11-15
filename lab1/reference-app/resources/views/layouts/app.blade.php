@@ -167,7 +167,26 @@
             /* ===== Перемикач мови (ЛР5) ===== */
         .lang-switch { margin-left: auto; display: flex; }
         .menu .lang-switch a.active { background: var(--dark); }
+
+         .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+        .tag { background: #fff3e8; color: var(--orange); border: 1px solid #ffd2ad; border-radius: 14px; padding: 3px 12px; font-size: 13px; font-weight: 600; }
+        .blog-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+        .blog-filters a { padding: 6px 14px; border: 1px solid #e5e7eb; border-radius: 16px; background: #fff; font-size: 14px; }
+        .blog-filters a.active, .blog-filters a:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+        .select2-container--default .select2-selection--multiple { border: 1px solid #d1d5db; border-radius: 8px; min-height: 42px; }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice { background: var(--orange); border-color: var(--orange); color: #fff; }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove { color: #fff; margin-right: 6px; }
+        .bootstrap-duallistbox-container { display: flex; gap: 20px; max-width: 720px; }
+        .bootstrap-duallistbox-container .box1,
+        .bootstrap-duallistbox-container .box2 { flex: 1; min-width: 0; }
+        .bootstrap-duallistbox-container select { width: 100%; height: 190px; }
+
+        .select2-container--default .select2-selection--multiple { border: 1px solid #d1d5db; border-radius: 8px; min-height: 42px; }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice { background: var(--orange); border-color: var(--orange); color: #fff; }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove { color: #fff; margin-right: 6px; }
+        .form-group .select2-container .select2-search__field { width: auto; min-height: 0; padding: 0; border: 0; margin-top: 6px; background: transparent; }
     </style>
+        @vite(['resources/js/app.js'])
 </head>
 <body>
     <div class="topbar">

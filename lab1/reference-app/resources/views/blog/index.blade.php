@@ -13,11 +13,19 @@
             <div class="alert-success">{{ session('success') }}</div>
         @endif
 
+        <nav class="blog-filters">
+            <a href="{{ route('blog.index') }}" @class(['active' => ! $filterId])>Усі записи</a>
+
+            @foreach ($filters as $id => $name)
+                <a href="{{ route('blog.index', ['filter' => $id]) }}" @class(['active' => (int) $filterId === $id])>{{ $name }}</a>
+            @endforeach
+        </nav>
+
         <div class="blog-grid">
             @forelse ($blogs as $blog)
                 @include('blog._item', ['blog' => $blog])
             @empty
-                <p>Записів поки немає.</p>
+                <p>Записів із такою міткою немає.</p>
             @endforelse
         </div>
 
