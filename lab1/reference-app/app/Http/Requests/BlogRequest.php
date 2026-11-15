@@ -21,6 +21,13 @@ class BlogRequest extends FormRequest
                 'nullable',
                 'exists:category,category_id',
             ],
+
+            'filters' => ['sometimes', 'array'],
+            'filters.*' => [
+                'integer',
+                'distinct',
+                'exists:filter,filter_id',
+            ],
         ];
     }
 
@@ -31,6 +38,10 @@ class BlogRequest extends FormRequest
             'title.max' => 'Заголовок не може перевищувати 200 символів.',
             'description.max' => 'Короткий опис не може перевищувати 500 символів.',
             'category_id.exists' => 'Оберіть категорію зі списку.',
+            'filters.array' => 'Мітки мають бути переданими списком.',
+            'filters.*.integer' => 'Некоректний ідентифікатор мітки.',
+            'filters.*.distinct' => 'Мітки не повинні повторюватись.',
+            'filters.*.exists' => 'Обрана мітка не існує.',
         ];
     }
 }

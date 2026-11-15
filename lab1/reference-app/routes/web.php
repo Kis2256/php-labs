@@ -6,6 +6,8 @@ use App\Http\Controllers\PrinterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\FilterController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PrinterTranslationController;
 
 Route::get('/', function () {
@@ -31,9 +33,13 @@ Route::get('/stats', [StatsController::class, 'pages'])->name('stats.pages');
 Route::get('/stats/detail', [StatsController::class, 'detail'])->name('stats.detail');
 Route::get('/stats/printers', [StatsController::class, 'printers'])->name('stats.printers');
 
-
 Route::get('/blog/admin', [BlogController::class, 'admin'])->name('blog.admin');
+Route::get('/blog/{blog}/tags', [BlogController::class, 'tags'])->name('blog.tags');
+Route::post('/blog/{blog}/tags', [BlogController::class, 'tagsStore'])->name('blog.tags.store');
 Route::resource('blog', BlogController::class);
+
+Route::resource('filters', FilterController::class)->except(['show']);
+Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');
 
 Route::get('/printers/{printer}/translations', [PrinterTranslationController::class, 'index'])->name('printers.translations.index');
 Route::get('/printers/{printer}/translations/{locale}/edit', [PrinterTranslationController::class, 'edit'])->name('printers.translations.edit');

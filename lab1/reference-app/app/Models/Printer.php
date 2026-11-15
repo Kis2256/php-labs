@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\TechnologyEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Printer extends Model
@@ -26,6 +27,16 @@ class Printer extends Model
     public function translations(): HasMany
     {
         return $this->hasMany(PrinterTranslation::class);
+    }
+
+    public function materials(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Material::class,
+            'printer_material',
+            'printer_id',
+            'material_id'
+        );
     }
 
     /**

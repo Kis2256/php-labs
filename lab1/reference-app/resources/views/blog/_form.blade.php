@@ -20,6 +20,21 @@
 </div>
 
 <div class="form-group">
+    <label for="filters">Мітки</label>
+    <select id="filters" name="filters[]" multiple>
+        @foreach ($filters as $id => $name)
+            <option value="{{ $id }}" @selected(in_array($id, old('filters', $selected ?? [])))>{{ $name }}</option>
+        @endforeach
+    </select>
+    @error('filters')
+        <p class="error">{{ $message }}</p>
+    @enderror
+    @error('filters.*')
+        <p class="error">{{ $message }}</p>
+    @enderror
+</div>
+
+<div class="form-group">
     <label for="description">Короткий опис</label>
     <textarea id="description" name="description" class="@error('description') is-invalid @enderror">{{ old('description', $blog->description ?? '') }}</textarea>
     @error('description')

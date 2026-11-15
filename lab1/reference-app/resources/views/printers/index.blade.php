@@ -6,7 +6,10 @@
     <div class="container">
         <div class="toolbar">
             <h1 class="page-title">Склад <span>принтерів</span></h1>
-            <a href="{{ route('printers.create') }}" class="btn btn-orange">Додати принтер</a>
+            <div class="actions">
+                <a href="{{ route('materials.index') }}" class="btn btn-light">Матеріали</a>
+                <a href="{{ route('printers.create') }}" class="btn btn-orange">Додати принтер</a>
+            </div>
         </div>
 
         @if (session('success'))
@@ -36,6 +39,7 @@
                     <th>Технологія</th>
                     <th>Ціна, грн</th>
                     <th>На складі</th>
+                    <th>Матеріалів</th>
                     <th>Дії</th>
                 </tr>
             </thead>
@@ -48,6 +52,7 @@
                         <td>{{ $printer->technology->value }}</td>
                         <td>{{ number_format($printer->price, 0, ',', ' ') }}</td>
                         <td>{{ $printer->quantity }} шт.</td>
+                        <td>{{ $printer->materials_count }}</td>
                         <td>
                             <div class="actions">
                                 <a href="{{ route('printers.edit', $printer) }}" class="btn btn-light btn-sm">Редагувати</a>
@@ -61,7 +66,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">Принтерів не знайдено.</td>
+                        <td colspan="8">Принтерів не знайдено.</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\TechnologyEnum;
 use App\Http\Requests\PrinterRequest;
+use App\Models\Material;
 use App\Models\Printer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class PrinterController extends Controller
 {
@@ -15,6 +17,7 @@ class PrinterController extends Controller
 
         $printers = Printer::query()
             ->with('translations')
+            ->withCount('materials')
             ->when($brand, fn ($query) => $query->where('brand', $brand))
             ->orderBy('name')
             ->paginate(5)
@@ -30,14 +33,20 @@ class PrinterController extends Controller
 
     public function create()
     {
-        $technologies = TechnologyEnum::cases();
-
-        return view('printers.create', compact('technologies'));
+        return view('printers.create', [
+            'technologies' => TechnologyEnum::cases(),
+            'materials' => $this->materialsGrouped(),
+            'selected' => [],
+        ]);
     }
 
     public function store(PrinterRequest $request)
     {
-        $printer = Printer::create($request->validated());
+        $data = $request->validated();
+
+        $printer = Printer::create(Arr::except($data, ['materials']));
+
+        $printer->materials()->sync($data['materials'] ?? []);
 
         return redirect()
             ->route('printers.show', $printer)
@@ -46,21 +55,30 @@ class PrinterController extends Controller
 
     public function show(Printer $printer)
     {
-        $printer->load('translations');
+        $printer->load(['translations', 'materials']);
 
         return view('printers.show', compact('printer'));
     }
 
     public function edit(Printer $printer)
     {
-        $technologies = TechnologyEnum::cases();
+        $printer->load('materials');
 
-        return view('printers.edit', compact('printer', 'technologies'));
+        return view('printers.edit', [
+            'printer' => $printer,
+            'technologies' => TechnologyEnum::cases(),
+            'materials' => $this->materialsGrouped(),
+            'selected' => $printer->materials->pluck('id')->all(),
+        ]);
     }
 
     public function update(PrinterRequest $request, Printer $printer)
     {
-        $printer->update($request->validated());
+        $data = $request->validated();
+
+        $printer->update(Arr::except($data, ['materials']));
+
+        $printer->materials()->sync($data['materials'] ?? []);
 
         return redirect()
             ->route('printers.show', $printer)
@@ -74,5 +92,13 @@ class PrinterController extends Controller
         return redirect()
             ->route('printers.index')
             ->with('success', 'Принтер видалено.');
+    }
+
+    private function materialsGrouped()
+    {
+        return Material::orderBy('technology')
+            ->orderBy('name')
+            ->get()
+            ->groupBy('technology');
     }
 }
