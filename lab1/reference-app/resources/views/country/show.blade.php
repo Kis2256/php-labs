@@ -11,12 +11,14 @@
             <p><strong>Населення:</strong> {{ number_format($country->population, 0, ',', ' ') }}</p>
 
             <div class="actions">
-                <a href="{{ route('country.edit', $country) }}" class="btn btn-orange btn-sm">Редагувати</a>
-                <form method="POST" action="{{ route('country.destroy', $country) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
-                </form>
+                @auth
+                    <a href="{{ route('country.edit', $country) }}" class="btn btn-orange btn-sm">Редагувати</a>
+                    <form method="POST" action="{{ route('country.destroy', $country) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                    </form>
+                @endauth
                 <a href="{{ route('country.index') }}" class="btn btn-light btn-sm">Повернутися до списку</a>
             </div>
         </div>

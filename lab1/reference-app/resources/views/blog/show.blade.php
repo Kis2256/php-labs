@@ -31,8 +31,10 @@
             </div>
 
             <div class="actions">
-                <a href="{{ route('blog.edit', $blog) }}" class="btn btn-orange btn-sm">Редагувати</a>
-                <a href="{{ route('blog.tags', $blog) }}" class="btn btn-light btn-sm">Редагувати мітки</a>
+                @auth
+                    <a href="{{ route('blog.edit', $blog) }}" class="btn btn-orange btn-sm">Редагувати</a>
+                    <a href="{{ route('blog.tags', $blog) }}" class="btn btn-light btn-sm">Редагувати мітки</a>
+                @endauth
                 <a href="{{ route('blog.index') }}" class="btn btn-light btn-sm">До блогу</a>
             </div>
         </div>
