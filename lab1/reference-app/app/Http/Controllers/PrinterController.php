@@ -8,28 +8,31 @@ use App\Models\Material;
 use App\Models\Printer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use App\Queries\PrinterFilter;
+use Illuminate\Validation\Rule;
 
 class PrinterController extends Controller
 {
-    public function index(Request $request)
-    {
-        $brand = $request->query('brand');
+   public function index(Request $request, PrinterFilter $filter)
+{
+    $input = $request->validate([
+        'q' => ['nullable', 'string', 'max:100'],
+        'brand' => ['nullable', 'string', 'max:50'],
+        'technology' => ['nullable', Rule::enum(TechnologyEnum::class)],
+        'material_id' => ['nullable', 'integer', 'exists:materials,id'],
+        'sort' => ['nullable', 'string', 'max:30'],
+    ]);
 
-        $printers = Printer::query()
-            ->with('translations')
-            ->withCount('materials')
-            ->when($brand, fn ($query) => $query->where('brand', $brand))
-            ->orderBy('name')
-            ->paginate(5)
-            ->withQueryString();
+    $printers = $filter->apply($input)
+        ->paginate(5)
+        ->withQueryString();
 
-        $brands = Printer::query()
-            ->distinct()
-            ->orderBy('brand')
-            ->pluck('brand');
-
-        return view('printers.index', compact('printers', 'brands', 'brand'));
-    }
+    return view('printers.index', [
+        'printers' => $printers,
+        'brands' => Printer::query()->distinct()->orderBy('brand')->pluck('brand'),
+        'materials' => Material::orderBy('technology')->orderBy('name')->pluck('name', 'id'),
+    ]);
+}
 
     public function create()
     {

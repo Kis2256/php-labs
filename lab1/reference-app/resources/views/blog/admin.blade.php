@@ -13,13 +13,37 @@
             <div class="alert-success">{{ session('success') }}</div>
         @endif
 
+        <form method="GET" action="{{ route('blog.admin') }}" class="filter">
+            <input type="text" name="title" value="{{ request('title') }}" placeholder="Заголовок">
+            <input type="text" name="categoryName" value="{{ request('categoryName') }}" placeholder="Назва категорії">
+
+            <select name="category_id">
+                <option value="">Усі категорії</option>
+                @foreach ($categories as $id => $name)
+                    <option value="{{ $id }}" @selected(request('category_id') == $id)>{{ $name }}</option>
+                @endforeach
+            </select>
+
+            <select name="filter_id">
+                <option value="">Усі мітки</option>
+                @foreach ($filters as $id => $name)
+                    <option value="{{ $id }}" @selected(request('filter_id') == $id)>{{ $name }}</option>
+                @endforeach
+            </select>
+
+            <input type="hidden" name="sort" value="{{ request('sort') }}">
+            <button type="submit" class="btn btn-orange btn-sm">Застосувати</button>
+            <a href="{{ route('blog.admin') }}" class="btn btn-light btn-sm">Скинути фільтри</a>
+        </form>
+
         <table class="data-table">
             <thead>
                 <tr>
                     <th>№</th>
-                    <th>Заголовок</th>
-                    <th>Категорія</th>
-                    <th>Дата</th>
+                    <th>@include('partials.sort-link', ['route' => 'blog.admin', 'field' => 'title', 'label' => 'Заголовок'])</th>
+                    <th>@include('partials.sort-link', ['route' => 'blog.admin', 'field' => 'categoryName', 'label' => 'Категорія'])</th>
+                    <th>Мітки</th>
+                    <th>@include('partials.sort-link', ['route' => 'blog.admin', 'field' => 'created', 'label' => 'Дата'])</th>
                     <th>Дії</th>
                 </tr>
             </thead>
@@ -29,6 +53,13 @@
                         <td>{{ $blogs->firstItem() + $i }}</td>
                         <td><a href="{{ route('blog.show', $blog) }}">{{ $blog->title }}</a></td>
                         <td>{{ $blog->category?->category_name ?? '—' }}</td>
+                        <td>
+                            @forelse ($blog->filters as $filter)
+                                <span class="tag">{{ $filter->filter_name }}</span>
+                            @empty
+                                —
+                            @endforelse
+                        </td>
                         <td>{{ $blog->dt_created->format('d.m.Y') }}</td>
                         <td>
                             <div class="actions">
@@ -42,9 +73,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
-                        <td colspan="5">Записів немає.</td>
-                    </tr>
+                    <tr><td colspan="6">Записів не знайдено.</td></tr>
                 @endforelse
             </tbody>
         </table>
