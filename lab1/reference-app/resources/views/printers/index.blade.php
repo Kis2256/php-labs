@@ -8,7 +8,9 @@
             <h1 class="page-title">Склад <span>принтерів</span></h1>
             <div class="actions">
                 <a href="{{ route('materials.index') }}" class="btn btn-light">Матеріали</a>
-                <a href="{{ route('printers.create') }}" class="btn btn-orange">Додати принтер</a>
+                @auth
+                    <a href="{{ route('printers.create') }}" class="btn btn-orange">Додати принтер</a>
+                @endauth
             </div>
         </div>
 
@@ -56,7 +58,9 @@
                     <th>@include('partials.sort-link', ['route' => 'printers.index', 'field' => 'quantity', 'label' => 'На складі'])</th>
                     <th>Матеріали</th>
                     <th>@include('partials.sort-link', ['route' => 'printers.index', 'field' => 'materials', 'label' => 'К-сть матеріалів'])</th>
-                    <th>Дії</th>
+                    @auth
+                        <th>Дії</th>
+                    @endauth
                 </tr>
             </thead>
             <tbody>
@@ -76,19 +80,21 @@
                             @endforelse
                         </td>
                         <td>{{ $printer->materials_count }}</td>
-                        <td>
-                            <div class="actions">
-                                <a href="{{ route('printers.edit', $printer) }}" class="btn btn-light btn-sm">Редагувати</a>
-                                <form method="POST" action="{{ route('printers.destroy', $printer) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
-                                </form>
-                            </div>
-                        </td>
+                        @auth
+                            <td>
+                                <div class="actions">
+                                    <a href="{{ route('printers.edit', $printer) }}" class="btn btn-light btn-sm">Редагувати</a>
+                                    <form method="POST" action="{{ route('printers.destroy', $printer) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endauth
                     </tr>
                 @empty
-                    <tr><td colspan="9">Принтерів не знайдено.</td></tr>
+                    <tr><td colspan="{{ auth()->check() ? 9 : 8 }}">Принтерів не знайдено.</td></tr>
                 @endforelse
             </tbody>
         </table>

@@ -27,12 +27,14 @@
             <p><strong>Додано:</strong> {{ $printer->created_at->format('d.m.Y H:i') }}</p>
 
             <div class="actions">
-                <a href="{{ route('printers.edit', $printer) }}" class="btn btn-orange btn-sm">Редагувати</a>
-                <form method="POST" action="{{ route('printers.destroy', $printer) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
-                </form>
+                @auth
+                    <a href="{{ route('printers.edit', $printer) }}" class="btn btn-orange btn-sm">Редагувати</a>
+                    <form method="POST" action="{{ route('printers.destroy', $printer) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                    </form>
+                @endauth
                 <a href="{{ route('printers.index') }}" class="btn btn-light btn-sm">Повернутися до списку</a>
             </div>
         </div>

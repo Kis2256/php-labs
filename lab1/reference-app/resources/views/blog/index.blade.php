@@ -6,7 +6,9 @@
     <div class="container">
         <div class="toolbar">
             <h1 class="page-title">Наш <span>блог</span></h1>
-            <a href="{{ route('blog.admin') }}" class="btn btn-light">Адміністрування</a>
+            @auth
+                <a href="{{ route('blog.admin') }}" class="btn btn-light">Адміністрування</a>
+            @endauth
         </div>
 
         @if (session('success'))

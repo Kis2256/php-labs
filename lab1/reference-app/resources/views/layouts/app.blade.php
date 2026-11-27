@@ -39,6 +39,9 @@
         .menu .container { display: flex; flex-wrap: wrap; }
         .menu a { color: #fff; font-weight: 600; padding: 14px 18px; transition: background .2s; }
         .menu a:hover { background: var(--orange-dark); }
+        .menu .menu-logout { display: flex; }
+        .menu .menu-logout button { background: none; border: none; color: #fff; font: inherit; font-weight: 600; padding: 14px 18px; cursor: pointer; transition: background .2s; }
+        .menu .menu-logout button:hover { background: var(--orange-dark); }
         .menu a.catalog { background: var(--dark); }
 
         main { flex: 1; padding: 40px 0; }
@@ -153,7 +156,6 @@
             .btn-outline { margin: 12px 0 0; }
         }
 
-                /* ===== Блог (ЛР5) ===== */
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 24px 0; }
         .blog-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
         .blog-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0, 0, 0, .12); }
@@ -164,7 +166,7 @@
         .blog-category { font-size: 13px; font-weight: 700; color: var(--orange); }
         .blog-meta { font-size: 13px; color: #666; }
         .blog-more { color: var(--orange); font-weight: 700; }
-            /* ===== Перемикач мови (ЛР5) ===== */
+
         .lang-switch { margin-left: auto; display: flex; }
         .menu .lang-switch a.active { background: var(--dark); }
 
@@ -223,6 +225,22 @@
             <a href="{{ route('stats.pages') }}">Статистика</a>
             <a href="{{ route('site.about') }}">Про магазин</a>
             <a href="{{ route('site.contact') }}">Контакти</a>
+
+             @auth
+                <a href="{{ route('blog.admin') }}">Керування блогом</a>
+                <a href="{{ route('users.index') }}">Користувачі</a>
+                <a href="{{ route('dashboard') }}">Кабінет</a>
+                <a href="{{ route('profile.edit') }}">Мій профіль</a>
+                <form method="POST" action="{{ route('logout') }}" class="menu-logout">
+                @csrf
+                <button type="submit">Вийти ({{ auth()->user()->name }})</button>
+                </form>
+            @endauth
+            @guest
+                <a href="{{ route('login') }}">Увійти</a>
+                <a href="{{ route('register') }}">Реєстрація</a>
+            @endguest
+
             <span class="lang-switch">
     @foreach (config('locales.supported') as $code => $name)
         <a href="{{ request()->fullUrlWithQuery(['lang' => $code]) }}" class="{{ app()->getLocale() === $code ? 'active' : '' }}">{{ strtoupper($code) }}</a>

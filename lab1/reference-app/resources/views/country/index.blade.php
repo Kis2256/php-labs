@@ -6,7 +6,9 @@
     <div class="container">
         <div class="toolbar">
             <h1 class="page-title">Довідник <span>країн</span></h1>
-            <a href="{{ route('country.create') }}" class="btn btn-orange">Додати країну</a>
+            @auth
+                <a href="{{ route('country.create') }}" class="btn btn-orange">Додати країну</a>
+            @endauth
         </div>
 
         <table class="data-table">
@@ -16,7 +18,9 @@
                     <th>Код</th>
                     <th>Назва</th>
                     <th>Населення</th>
-                    <th>Дії</th>
+                    @auth
+                        <th>Дії</th>
+                    @endauth
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +30,9 @@
                         <td>{{ $country->code }}</td>
                         <td><a href="{{ route('country.show', $country) }}">{{ $country->name }}</a></td>
                         <td>{{ number_format($country->population, 0, ',', ' ') }}</td>
-                        <td><a href="{{ route('country.edit', $country) }}">Редагувати</a></td>
+                        @auth
+                            <td><a href="{{ route('country.edit', $country) }}">Редагувати</a></td>
+                        @endauth
                     </tr>
                 @endforeach
             </tbody>
